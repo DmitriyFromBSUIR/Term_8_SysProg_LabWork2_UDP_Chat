@@ -1,0 +1,573 @@
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINING OPTION VALUES:
+  -inline-factor: 100
+  -inline-min-size: 20
+  -inline-max-size: 230
+  -inline-max-total-size: 2000
+  -inline-max-per-routine: 10000
+  -inline-max-per-compile: 500000
+
+
+Begin optimization report for: main()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (main()) [1] main.cpp(7,1)
+  -> (8,10) std::operator<<<std::char_traits<char>>(std::basic_ostream<char, std::char_traits<char>> &, const char *)
+  -> (8,28) std::basic_ostream<char, std::char_traits<char>>::operator<<(std::basic_ostream<char, std::char_traits<char>> *, std::basic_ostream<char, std::char_traits<char>>::__ostream_type &(*)(std::basic_ostream<char, std::char_traits<char>>::__ostream_type &))
+
+===========================================================================
+
+Begin optimization report for: std::char_traits<char>::length(const std::char_traits<char>::char_type *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (std::char_traits<char>::length(const std::char_traits<char>::char_type *)) [3] /usr/include/c++/4.8/bits/char_traits.h(259,7)
+  -> EXTERN: (259,16) __builtin_strlen(const char *)
+
+===========================================================================
+
+Begin optimization report for: __gthread_active_p()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gthread_active_p()) /usr/include/i386-linux-gnu/c++/4.8/bits/gthr-default.h(248,1)
+
+===========================================================================
+
+Begin optimization report for: std::ctype<char>::widen(const std::ctype<char> *, char) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (std::ctype<char>::widen(const std::ctype<char> *, char) const) /usr/include/c++/4.8/bits/locale_facets.h(866,7)
+
+===========================================================================
+
+Begin optimization report for: std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char>>::~basic_stringbuf(std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char>> *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char>>::~basic_stringbuf(std::basic_stringbuf<char, std::char_traits<char>, std::allocator<char>> *)) /usr/include/c++/4.8/iosfwd(93,11)
+
+===========================================================================
+
+Begin optimization report for: __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *)) /usr/include/c++/4.8/ext/new_allocator.h(79,45)
+
+===========================================================================
+
+Begin optimization report for: __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *, const __gnu_cxx::new_allocator<char> &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *, const __gnu_cxx::new_allocator<char> &)) /usr/include/c++/4.8/ext/new_allocator.h(81,65)
+
+===========================================================================
+
+Begin optimization report for: __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const, const __gnu_cxx::new_allocator<char> &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const, const __gnu_cxx::new_allocator<char> &)) /usr/include/c++/4.8/ext/new_allocator.h(81,7)
+
+===========================================================================
+
+Begin optimization report for: std::operator|(std::_Ios_Iostate, std::_Ios_Iostate)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (std::operator|(std::_Ios_Iostate, std::_Ios_Iostate)) /usr/include/c++/4.8/bits/ios_base.h(158,3)
+
+===========================================================================
+
+Begin optimization report for: std::__check_facet<std::basic_ios<char, std::char_traits<char>>::__ctype_type>(const std::basic_ios<char, std::char_traits<char>>::__ctype_type *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (std::__check_facet<std::basic_ios<char, std::char_traits<char>>::__ctype_type>(const std::basic_ios<char, std::char_traits<char>>::__ctype_type *)) /usr/include/c++/4.8/bits/basic_ios.h(47,5)
+
+===========================================================================
+
+Begin optimization report for: __gnu_cxx::__exchange_and_add(volatile _Atomic_word *, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gnu_cxx::__exchange_and_add(volatile _Atomic_word *, int)) /usr/include/c++/4.8/ext/atomicity.h(49,3)
+
+===========================================================================
+
+Begin optimization report for: __gnu_cxx::__exchange_and_add_single(_Atomic_word *, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gnu_cxx::__exchange_and_add_single(_Atomic_word *, int)) /usr/include/c++/4.8/ext/atomicity.h(66,3)
+
+===========================================================================
+
+Begin optimization report for: __gnu_cxx::__exchange_and_add_dispatch(_Atomic_word *, int)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gnu_cxx::__exchange_and_add_dispatch(_Atomic_word *, int)) /usr/include/c++/4.8/ext/atomicity.h(79,3)
+
+===========================================================================
+
+Begin optimization report for: __sti__$E()
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (__sti__$E()) [36] <compiler generated>
+  -> INLINE: /usr/include/c++/4.8/iostream:(74,25) __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error13misc_categoryE()
+    -> INLINE (MANUAL): /usr/local/include/boost/asio/error.hpp:(265,5) boost::asio::error::get_misc_category()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(119,1) __cxa_guard_abort()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(120,32) __cxa_guard_acquire()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(120,32) __cxa_guard_release()
+      -> INLINE (MANUAL): /usr/local/include/boost/asio/impl/error.ipp:(120,32) boost::asio::error::detail::misc_category::misc_category(boost::asio::error::detail::misc_category *)
+        -> EXTERN: (94,7) __cxa_call_unexpected
+        -> INLINE (MANUAL): (94,7) boost::system::error_category::error_category(boost::system::error_category *const)
+          -> INLINE (MANUAL): /usr/local/include/boost/system/error_code.hpp:(185,11) boost::system::error_category::error_category(boost::system::error_category *)
+  -> INLINE: /usr/include/c++/4.8/iostream:(74,25) __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error17addrinfo_categoryE()
+    -> INLINE (MANUAL): /usr/local/include/boost/asio/error.hpp:(263,5) boost::asio::error::get_addrinfo_category()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(85,1) __cxa_guard_abort()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(86,36) __cxa_guard_acquire()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(86,36) __cxa_guard_release()
+      -> INLINE (MANUAL): /usr/local/include/boost/asio/impl/error.ipp:(86,36) boost::asio::error::detail::addrinfo_category::addrinfo_category(boost::asio::error::detail::addrinfo_category *)
+        -> EXTERN: (64,7) __cxa_call_unexpected
+        -> INLINE (MANUAL): (64,7) boost::system::error_category::error_category(boost::system::error_category *const)
+          -> INLINE (MANUAL): /usr/local/include/boost/system/error_code.hpp:(185,11) boost::system::error_category::error_category(boost::system::error_category *)
+  -> INLINE: /usr/include/c++/4.8/iostream:(74,25) __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error14netdb_categoryE()
+    -> INLINE (MANUAL): /usr/local/include/boost/asio/error.hpp:(261,5) boost::asio::error::get_netdb_category()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(57,1) __cxa_guard_abort()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(58,33) __cxa_guard_acquire()
+      -> EXTERN: /usr/local/include/boost/asio/impl/error.ipp:(58,33) __cxa_guard_release()
+      -> INLINE (MANUAL): /usr/local/include/boost/asio/impl/error.ipp:(58,33) boost::asio::error::detail::netdb_category::netdb_category(boost::asio::error::detail::netdb_category *)
+        -> EXTERN: (32,7) __cxa_call_unexpected
+        -> INLINE (MANUAL): (32,7) boost::system::error_category::error_category(boost::system::error_category *const)
+          -> INLINE (MANUAL): /usr/local/include/boost/system/error_code.hpp:(185,11) boost::system::error_category::error_category(boost::system::error_category *)
+  -> INLINE: /usr/include/c++/4.8/iostream:(74,25) __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error15system_categoryE()
+    -> INLINE (MANUAL): /usr/local/include/boost/asio/error.hpp:(259,5) boost::asio::error::get_system_category()
+      -> EXTERN: (230,10) boost::system::system_category()
+  -> INLINE: /usr/include/c++/4.8/iostream:(74,25) __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system11native_ecatE()
+    -> EXTERN: /usr/local/include/boost/system/error_code.hpp:(223,53) boost::system::system_category()
+  -> INLINE: /usr/include/c++/4.8/iostream:(74,25) __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system10errno_ecatE()
+    -> EXTERN: /usr/local/include/boost/system/error_code.hpp:(222,53) boost::system::generic_category()
+  -> INLINE: /usr/include/c++/4.8/iostream:(74,25) __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system14posix_categoryE()
+    -> EXTERN: /usr/local/include/boost/system/error_code.hpp:(221,53) boost::system::generic_category()
+  -> EXTERN: /usr/include/c++/4.8/iostream:(74,25) __cxa_atexit()
+  -> EXTERN: /usr/include/c++/4.8/iostream:(74,25) std::ios_base::Init::Init(std::ios_base::Init *)
+
+===========================================================================
+
+Begin optimization report for: __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system14posix_categoryE()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system14posix_categoryE()) <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system11native_ecatE()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system11native_ecatE()) <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)) /usr/include/c++/4.8/ext/new_allocator.h(79,7)
+
+===========================================================================
+
+Begin optimization report for: __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error13misc_categoryE()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error13misc_categoryE()) <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error17addrinfo_categoryE()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error17addrinfo_categoryE()) <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error14netdb_categoryE()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error14netdb_categoryE()) <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error15system_categoryE()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost4asio5error15system_categoryE()) <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: __sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system10errno_ecatE()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (__sti___ZN29_INTERNAL_8_main_cpp_7efa73cb5boost6system10errno_ecatE()) <compiler generated>
+
+===========================================================================
+
+Begin optimization report for: boost::system::operator==(const boost::system::error_condition &, const boost::system::error_condition &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::system::operator==(const boost::system::error_condition &, const boost::system::error_condition &)) /usr/local/include/boost/system/error_code.hpp(290,7)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::get_misc_category()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::asio::error::get_misc_category()) /usr/local/include/boost/asio/impl/error.ipp(119,1)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::get_addrinfo_category()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::asio::error::get_addrinfo_category()) /usr/local/include/boost/asio/impl/error.ipp(85,1)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::get_netdb_category()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::asio::error::get_netdb_category()) /usr/local/include/boost/asio/impl/error.ipp(57,1)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::get_system_category()
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::asio::error::get_system_category()) /usr/local/include/boost/asio/error.hpp(229,1)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_code::category(const boost::system::error_code *) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::system::error_code::category(const boost::system::error_code *) const) /usr/local/include/boost/system/error_code.hpp(355,70)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_code::value(const boost::system::error_code *) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::system::error_code::value(const boost::system::error_code *) const) /usr/local/include/boost/system/error_code.hpp(354,70)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_condition::error_condition(boost::system::error_condition *, int, const boost::system::error_category &)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::system::error_condition::error_condition(boost::system::error_condition *, int, const boost::system::error_category &)) /usr/local/include/boost/system/error_code.hpp(236,110)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::error_category(boost::system::error_category *const)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::system::error_category::error_category(boost::system::error_category *const)) /usr/local/include/boost/system/error_code.hpp(185,11)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::error_category(boost::system::error_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::system::error_category::error_category(boost::system::error_category *)) /usr/local/include/boost/system/error_code.hpp(185,11)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::operator==(const boost::system::error_category *, const boost::system::error_category &) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::system::error_category::operator==(const boost::system::error_category *, const boost::system::error_category &) const) /usr/local/include/boost/system/error_code.hpp(198,79)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::equivalent(const boost::system::error_category *, const boost::system::error_code &, int) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::system::error_category::equivalent(const boost::system::error_category *, const boost::system::error_code &, int) const) [57] /usr/local/include/boost/system/error_code.hpp(505,5)
+  -> INLINE (MANUAL): (506,20) boost::system::error_category::operator==(const boost::system::error_category *, const boost::system::error_category &) const
+  -> INLINE (MANUAL): (506,28) boost::system::error_code::category(const boost::system::error_code *) const
+  -> INLINE (MANUAL): (506,47) boost::system::error_code::value(const boost::system::error_code *) const
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::equivalent(const boost::system::error_category *, int, const boost::system::error_condition &) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::system::error_category::equivalent(const boost::system::error_category *, int, const boost::system::error_condition &) const) [58] /usr/local/include/boost/system/error_code.hpp(499,5)
+  -> EXTERN: (499,5) __cxa_call_unexpected
+  -> INDIRECT-: (500,39) 
+  -> INLINE (MANUAL): (500,46) boost::system::operator==(const boost::system::error_condition &, const boost::system::error_condition &)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::default_error_condition(const boost::system::error_category *, int) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::system::error_category::default_error_condition(const boost::system::error_category *, int) const) [59] /usr/local/include/boost/system/error_code.hpp(493,5)
+  -> INLINE (MANUAL): (494,36) boost::system::error_condition::error_condition(boost::system::error_condition *, int, const boost::system::error_category &)
+
+
+    Report from: Code generation optimizations [cg]
+
+/usr/local/include/boost/system/error_code.hpp(494,7):remark #34000: call to memcpy implemented inline with loads and stores with proven source (alignment, offset): (4, 0), and destination (alignment, offset): (1, 0)
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::~error_category(boost::system::error_category *const)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::system::error_category::~error_category(boost::system::error_category *const)) [60] /usr/local/include/boost/system/error_code.hpp(188,15)
+  -> EXTERN: (188,15) operator delete(void *)
+  -> INLINE (MANUAL): (188,15) boost::system::error_category::~error_category(boost::system::error_category *)
+
+===========================================================================
+
+Begin optimization report for: boost::system::error_category::~error_category(boost::system::error_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::system::error_category::~error_category(boost::system::error_category *)) [61] /usr/local/include/boost/system/error_code.hpp(188,32)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::misc_category::~misc_category(boost::asio::error::detail::misc_category *const)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::misc_category::~misc_category(boost::asio::error::detail::misc_category *const)) [62] /usr/local/include/boost/asio/impl/error.ipp(94,7)
+  -> EXTERN: (94,7) operator delete(void *)
+  -> DELETED: (94,7) boost::asio::error::detail::misc_category::~misc_category(boost::asio::error::detail::misc_category *)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::misc_category::~misc_category(boost::asio::error::detail::misc_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::misc_category::~misc_category(boost::asio::error::detail::misc_category *)) [63] /usr/local/include/boost/asio/impl/error.ipp(94,7)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::misc_category::misc_category(boost::asio::error::detail::misc_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::asio::error::detail::misc_category::misc_category(boost::asio::error::detail::misc_category *)) /usr/local/include/boost/asio/impl/error.ipp(94,7)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::misc_category::message(std::string *, const boost::asio::error::detail::misc_category *, int) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::misc_category::message(std::string *, const boost::asio::error::detail::misc_category *, int) const) [65] /usr/local/include/boost/asio/impl/error.ipp(103,3)
+  -> DELETED: (105,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (105,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (105,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (105,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (107,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (107,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (107,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (107,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (109,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (109,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (109,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (109,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (111,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (111,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (111,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (111,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (112,5) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (112,12) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (112,12) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (112,12) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::misc_category::name(const boost::asio::error::detail::misc_category *) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::misc_category::name(const boost::asio::error::detail::misc_category *) const) [66] /usr/local/include/boost/asio/impl/error.ipp(98,3)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::addrinfo_category::~addrinfo_category(boost::asio::error::detail::addrinfo_category *const)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::addrinfo_category::~addrinfo_category(boost::asio::error::detail::addrinfo_category *const)) [67] /usr/local/include/boost/asio/impl/error.ipp(64,7)
+  -> EXTERN: (64,7) operator delete(void *)
+  -> DELETED: (64,7) boost::asio::error::detail::addrinfo_category::~addrinfo_category(boost::asio::error::detail::addrinfo_category *)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::addrinfo_category::~addrinfo_category(boost::asio::error::detail::addrinfo_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::addrinfo_category::~addrinfo_category(boost::asio::error::detail::addrinfo_category *)) [68] /usr/local/include/boost/asio/impl/error.ipp(64,7)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::addrinfo_category::addrinfo_category(boost::asio::error::detail::addrinfo_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::asio::error::detail::addrinfo_category::addrinfo_category(boost::asio::error::detail::addrinfo_category *)) /usr/local/include/boost/asio/impl/error.ipp(64,7)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::addrinfo_category::message(std::string *, const boost::asio::error::detail::addrinfo_category *, int) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::addrinfo_category::message(std::string *, const boost::asio::error::detail::addrinfo_category *, int) const) [70] /usr/local/include/boost/asio/impl/error.ipp(73,3)
+  -> DELETED: (75,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (75,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (75,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (75,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (77,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (77,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (77,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (77,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (78,5) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (78,12) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (78,12) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (78,12) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::addrinfo_category::name(const boost::asio::error::detail::addrinfo_category *) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::addrinfo_category::name(const boost::asio::error::detail::addrinfo_category *) const) [71] /usr/local/include/boost/asio/impl/error.ipp(68,3)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::netdb_category::~netdb_category(boost::asio::error::detail::netdb_category *const)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::netdb_category::~netdb_category(boost::asio::error::detail::netdb_category *const)) [72] /usr/local/include/boost/asio/impl/error.ipp(32,7)
+  -> EXTERN: (32,7) operator delete(void *)
+  -> DELETED: (32,7) boost::asio::error::detail::netdb_category::~netdb_category(boost::asio::error::detail::netdb_category *)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::netdb_category::~netdb_category(boost::asio::error::detail::netdb_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::netdb_category::~netdb_category(boost::asio::error::detail::netdb_category *)) [73] /usr/local/include/boost/asio/impl/error.ipp(32,7)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::netdb_category::netdb_category(boost::asio::error::detail::netdb_category *)
+
+    Report from: Interprocedural optimizations [ipo]
+
+DEAD STATIC FUNCTION: (boost::asio::error::detail::netdb_category::netdb_category(boost::asio::error::detail::netdb_category *)) /usr/local/include/boost/asio/impl/error.ipp(32,7)
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::netdb_category::message(std::string *, const boost::asio::error::detail::netdb_category *, int) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::netdb_category::message(std::string *, const boost::asio::error::detail::netdb_category *, int) const) [75] /usr/local/include/boost/asio/impl/error.ipp(41,3)
+  -> DELETED: (43,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (43,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (43,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (43,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (45,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (45,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (45,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (45,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (47,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (47,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (47,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (47,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (49,7) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (49,14) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (49,14) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (49,14) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+  -> DELETED: (50,5) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> DELETED: (50,12) std::allocator<char>::~allocator(std::allocator<char> *)
+  -> EXTERN: (50,12) std::basic_string<char, std::char_traits<char>, std::allocator<char>>::basic_string(std::basic_string<char, std::char_traits<char>, std::allocator<char>> *, const char *, const std::allocator<char> &)
+  -> INLINE (MANUAL): (50,12) std::allocator<char>::allocator(std::allocator<char> *)
+    -> DELETED: /usr/include/c++/4.8/bits/allocator.h:(113,7) __gnu_cxx::new_allocator<char>::new_allocator(__gnu_cxx::new_allocator<char> *const)
+    -> EXTERN: /usr/include/c++/4.8/bits/allocator.h:(113,27) __cxa_call_unexpected
+
+===========================================================================
+
+Begin optimization report for: boost::asio::error::detail::netdb_category::name(const boost::asio::error::detail::netdb_category *) const
+
+    Report from: Interprocedural optimizations [ipo]
+
+INLINE REPORT: (boost::asio::error::detail::netdb_category::name(const boost::asio::error::detail::netdb_category *) const) [76] /usr/local/include/boost/asio/impl/error.ipp(36,3)
+
+===========================================================================

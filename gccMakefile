@@ -1,0 +1,3 @@
+all:
+	gcc -Wall -O2 -fopenmp -std=c++11 -c main.cpp -o main.o -I /usr/local/include/boost -L /usr/local/lib -lboost_regex -lboost_exception -lboost_log -lboost_thread -lpthread -isystem -lboost_system-mt
+	./a.out
