@@ -198,7 +198,8 @@ DIST          = /opt/Qt_v.5.5.1/5.5/gcc/mkspecs/features/spec_pre.prf \
 		../SysProg_LabWork2_UDP_Chat/MulticastReceiver.hpp \
 		../SysProg_LabWork2_UDP_Chat/MulticastSender.hpp \
 		../SysProg_LabWork2_UDP_Chat/BoostReceiver.hpp \
-		../SysProg_LabWork2_UDP_Chat/BoostSender.hpp ../SysProg_LabWork2_UDP_Chat/main.cpp \
+		../SysProg_LabWork2_UDP_Chat/BoostSender.hpp \
+		../SysProg_LabWork2_UDP_Chat/udpSocket.hpp ../SysProg_LabWork2_UDP_Chat/main.cpp \
 		../SysProg_LabWork2_UDP_Chat/MulticastReceiver.cpp \
 		../SysProg_LabWork2_UDP_Chat/MulticastSender.cpp \
 		../SysProg_LabWork2_UDP_Chat/SocketLib.cpp \
@@ -520,7 +521,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../SysProg_LabWork2_UDP_Chat/IncludedLibs.h ../SysProg_LabWork2_UDP_Chat/SocketLib.h ../SysProg_LabWork2_UDP_Chat/Sockets.hpp ../SysProg_LabWork2_UDP_Chat/MulticastReceiver.hpp ../SysProg_LabWork2_UDP_Chat/MulticastSender.hpp ../SysProg_LabWork2_UDP_Chat/BoostReceiver.hpp ../SysProg_LabWork2_UDP_Chat/BoostSender.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../SysProg_LabWork2_UDP_Chat/IncludedLibs.h ../SysProg_LabWork2_UDP_Chat/SocketLib.h ../SysProg_LabWork2_UDP_Chat/Sockets.hpp ../SysProg_LabWork2_UDP_Chat/MulticastReceiver.hpp ../SysProg_LabWork2_UDP_Chat/MulticastSender.hpp ../SysProg_LabWork2_UDP_Chat/BoostReceiver.hpp ../SysProg_LabWork2_UDP_Chat/BoostSender.hpp ../SysProg_LabWork2_UDP_Chat/udpSocket.hpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../SysProg_LabWork2_UDP_Chat/main.cpp ../SysProg_LabWork2_UDP_Chat/MulticastReceiver.cpp ../SysProg_LabWork2_UDP_Chat/MulticastSender.cpp ../SysProg_LabWork2_UDP_Chat/SocketLib.cpp ../SysProg_LabWork2_UDP_Chat/BoostReceiver.cpp $(DISTDIR)/
 
 
@@ -617,16 +618,13 @@ main.o: ../SysProg_LabWork2_UDP_Chat/main.cpp /opt/Qt_v.5.5.1/5.5/gcc/include/Qt
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qisenum.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qobject_impl.h \
 		/opt/Qt_v.5.5.1/5.5/gcc/include/QtCore/qeventloop.h \
-		../SysProg_LabWork2_UDP_Chat/MulticastSender.hpp \
-		../SysProg_LabWork2_UDP_Chat/SocketLib.h \
+		../SysProg_LabWork2_UDP_Chat/udpSocket.hpp \
+		../SysProg_LabWork2_UDP_Chat/Sockets.hpp \
 		../SysProg_LabWork2_UDP_Chat/IncludedLibs.h \
 		/usr/local/include/boost/exception \
 		/usr/local/include/boost/functional \
 		/usr/local/include/boost/regex \
-		/usr/local/include/boost/random \
-		../SysProg_LabWork2_UDP_Chat/MulticastReceiver.hpp \
-		../SysProg_LabWork2_UDP_Chat/BoostSender.hpp \
-		../SysProg_LabWork2_UDP_Chat/BoostReceiver.hpp
+		/usr/local/include/boost/random
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../SysProg_LabWork2_UDP_Chat/main.cpp
 
 MulticastReceiver.o: ../SysProg_LabWork2_UDP_Chat/MulticastReceiver.cpp 

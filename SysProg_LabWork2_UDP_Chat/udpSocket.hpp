@@ -3,6 +3,8 @@
 
 #include "Sockets.hpp"
 
+#define PORT "38000"
+
 struct NodeInternetAddress
 {// represents an Internet Protocol (IP) address.
 
@@ -19,13 +21,14 @@ private:
     // port
     unsigned short int _Port;
 
-    NodeInternetAddress(std::string& IP, unsigned short int port)
+public:
+    NodeInternetAddress(string& IP, unsigned short int port)
     {
         this->_IP = IP;
         this->_port = toString(port);
         this->_Port = port;
     }
-    NodeInternetAddress(std::string& IP, std::string& port)
+    NodeInternetAddress(string& IP, string& port)
     {
         this->_IP = IP;
         this->_port = port;
@@ -37,6 +40,8 @@ private:
         this->_port = port;
         this->_hints = ai;
     }
+
+    ~NodeInternetAddress() { freeAddrInfo();  }
 
     //----------------------------- обёртки для вызовов функций -----------------------------//
     bool _getAddrInfo(int family, int socktype, int protocol, int flags)
@@ -71,26 +76,27 @@ private:
     {
         memset(&_hints, 0, sizeof(_hints));
         this->_IP = IP;
-        this->_port = toString(port);
+        //this->_port = toString(port);
+        this->_port = port;
         _hints.ai_family = family;
         _hints.ai_socktype = socktype;
         _hints.ai_flags = flags;
         _hints.ai_protocol = protocol;
-        _hints.ai_canonname = canonname;
-        _hints.ai_addr = NULL;
-        _hints.ai_next = NULL;
+        _hints.ai_canonname = const_cast<char*>(canonname.c_str());
+        _hints.ai_addr = nullptr;
+        _hints.ai_next = nullptr;
         getAddrInfo(family, socktype, protocol, flags);
     }
 
-    NodeInternetAddress(sockaddr_in& addr)
+    NodeInternetAddress(sockaddr_in& addr, string IP, string port)
     {
         getNameInfo((sockaddr*)&addr, IP, port);
     }
 
-    NodeInternetAddress() {}
+    NodeInternetAddress() { _resultServicesInfoList = nullptr; }
     bool operator==(NodeInternetAddress& inetAddress)
     {//сравнение адресов
-        return (IP == inetAddress.IP) && (port == inetAddress.port);
+        return (_IP == inetAddress.getIP()) && (_port == inetAddress.getPort());
     }
     static bool getNameInfo(sockaddr* pSockAddr, string& hostName, string& port)
     {
@@ -117,16 +123,34 @@ private:
     void setCurrentAddrInfo(addrinfo hints)
     {
         //_hints = hints;
-        _hints.ai_addr->sa_data   = hints.ai_addr->sa_data;
-        _hints.ai_addr->sa_family = hints.ai_addr->sa_family;
+        //_hints.ai_addr->sa_data   = hints.ai_addr->sa_data;
+        _hints.ai_addr            = hints.ai_addr;
         _hints.ai_addrlen         = hints.ai_addrlen;
         _hints.ai_family          = hints.ai_family;
         _hints.ai_socktype        = hints.ai_socktype;
         _hints.ai_flags           = hints.ai_flags;
         _hints.ai_protocol        = hints.ai_protocol;
         _hints.ai_canonname       = hints.ai_canonname;
-        _hints.ai_addr = NULL;
-        _hints.ai_next = NULL;
+        _hints.ai_addr = nullptr;
+        _hints.ai_next = nullptr;
+    }
+
+    void setAddrInfoHints(addrinfo& hints)
+    {
+        _hints = hints;
+    }
+    addrinfo getAddIinfoHints() const
+    {
+        return _hints;
+    }
+
+    void setAddrInfoResultList(addrinfo* resultList)
+    {
+        _resultServicesInfoList = resultList;
+    }
+    addrinfo* getAddrInfoResultList() const
+    {
+        return _resultServicesInfoList;
     }
 
     string getIP()
@@ -138,16 +162,33 @@ private:
         _IP = IP;
     }
 
-    unsigned short int getPort() const
+    unsigned short int getNumValPort() const
     {
         return _Port;
     }
-    void setPort(unsigned short int port)
+    void setNumValPort(unsigned short int port)
     {
         _Port = port;
     }
 
+    string getPort() const
+    {
+        return _port;
+    }
+    void setPort(string& port)
+    {
+        _port = port;
+    }
 
+    //------------------------ закрытие объекта--------------------------------------//
+    void freeAddrInfo()
+    {
+        //The freeaddrinfo function frees address information that the getaddrinfo
+        //function dynamically allocates in addrinfo structures.
+        //освобождаем список из структур addrinfo
+        if (_resultServicesInfoList != nullptr)
+            freeaddrinfo(_resultServicesInfoList);
+    }
 } typedef NodeInetAddress;
 
 
@@ -156,14 +197,25 @@ class UDP_Socket
 {
 private:
     SOCKET _fsdHandle;
-    NodeInetAddress _nodeInetAddr;
-    int _protocol;
+    NodeInetAddress* _nodeInetAddr;
+    int _protocolFamily;
+    int _addressFamily;
+    unsigned int _messageMaxSize;
 
 public:
-    UDP_Socket()
-    {
+    enum class Selection { ReadCheck, WriteCheck, ExceptCheck };
 
+    UDP_Socket() { _nodeInetAddr = new NodeInetAddress(); resetHande(); _protocolFamily = 0; _addressFamily = 0; _messageMaxSize = 0; }
+
+    //UDP_Socket(char* IP = "", char* port = "", int domain = AF_UNSPEC, int socktype = SOCK_DGRAM, int protocol = IPPROTO_UDP, SOCKET handle = INVALID_SOCKET, size_t messageMaxSize = 256)
+    UDP_Socket(string IP = "", string port = "", int domain = AF_UNSPEC, int socktype = SOCK_DGRAM, int protocol = IPPROTO_UDP, SOCKET handle = INVALID_SOCKET, size_t messageMaxSize = 256)
+    {
+        socketSettings(IP, port, domain, socktype, protocol, handle, messageMaxSize);
+        Socket(this->_nodeInetAddr->getAddrInfoResultList());
+        Bind(this->_nodeInetAddr->getAddrInfoResultList());
     }
+
+    ~UDP_Socket() { shutDown(); closeSocket(); delete _nodeInetAddr; resetHande(); _protocolFamily = 0; _addressFamily = 0; _messageMaxSize = 0; }
 
     SOCKET getSocket() const
     {
@@ -174,13 +226,33 @@ public:
         _fsdHandle = sock;
     }
 
-    NodeInetAddress getNodeInetAddr() const
+    void resetHande() { _fsdHandle = INVALID_SOCKET; }
+
+    NodeInetAddress* getNodeInetAddr() const
     {
         return _nodeInetAddr;
     }
-    void setNodeInetAddr(NodeInetAddress& nodeInetAddr)
+    void setNodeInetAddr(NodeInetAddress* nodeInetAddr)
     {
         _nodeInetAddr = nodeInetAddr;
+    }
+
+    int getProtocolFamily() const
+    {
+        return _protocolFamily;
+    }
+    void setProtocolFamily(int protocolFamily)
+    {
+        _protocolFamily = protocolFamily;
+    }
+
+    int getAddressFamily() const
+    {
+        return _addressFamily;
+    }
+    void setAddressFamily(int addressFamily)
+    {
+        _addressFamily = addressFamily;
     }
 
     static int errorCode()
@@ -210,31 +282,181 @@ public:
         throw runtime_error(description);
     }
 
-    void socketSettings(char* IP = "", char* port = "", SOCKET handle = INVALID_SOCKET, size_t messageMaxSize = 128)
+    //void socketSettings(char* IP, char* port, int domain, int socktype, int protocol, SOCKET handle, size_t messageMaxSize)
+    void socketSettings(string IP, string port, int domain, int socktype, int protocol, SOCKET handle, size_t messageMaxSize)
     {//default socket parameters
-        _handle = handle;
-        _result = nullptr;
+        _fsdHandle = handle;
+
+        _nodeInetAddr = new NodeInetAddress(IP, port, domain, socktype, protocol);
+        //_nodeInetAddress.setAddrInfoHints(nullptr);
+        //_nodeInetAddress.setIP(IP);
+        //_nodeInetAddress.setPort(port);
 
         _messageMaxSize = messageMaxSize;
 
-        _nodeInetAddress.setIP(IP);
-        _nodeInetAddress.setPort(port);
+        _addressFamily = domain;
 
-        _protocol = IPPROTO_UDP;
+        _protocolFamily = protocol;
+    }
+
+    bool Socket(addrinfo* ptrAddrInfo)
+    {
+        //создание сокета int socket (domain, type, protocol)
+        _fsdHandle = ::socket(ptrAddrInfo->ai_family, //используемый для взаимодействия набор протоколов (для стека протоколов TCP/IP)
+            ptrAddrInfo->ai_socktype, // с установлением соединения
+            ptrAddrInfo->ai_protocol //протокол транспортного уровня
+                                   //(из нескольких возможных в стеке протоколов).
+                                   //Если этот аргумент задан равным 0,
+                                   //то будет использован протокол "по умолчанию"
+                                   //(TCP для SOCK_STREAM и UDP для SOCK_DGRAM
+                                   //при использовании комплекта протоколов TCP/IP).
+            );
+        return _fsdHandle != INVALID_SOCKET;
+    }
+
+    bool Bind(addrinfo* ptrAddrInfo)
+    {
+        int retValue = ::bind(_fsdHandle,	//дескриптор сокета
+            ptrAddrInfo->ai_addr, //структура, содержащуя локальный адрес, приписываемый socket'у
+            ptrAddrInfo->ai_addrlen);
+        return retValue != SOCKET_ERROR;
     }
 
     template<typename T>
     bool setSockOpt(int level, int optname, T optval)
     {
-        return ::setsockopt(_handle, level, optname, &(*(char*)&optval), sizeof(optval)) == 0;
+        return ::setsockopt(_fsdHandle, level, optname, &(*(char*)&optval), sizeof(optval)) == 0;
     }
 
     template<typename T>
     bool getSockOpt(int level, int optname, T &optval)
     {
         socklen_t optlen = sizeof(optval);
-        return ::getsockopt(_handle, level, optname, &(*(char*)&optval), &optlen) == 0;
+        return ::getsockopt(_fsdHandle, level, optname, &(*(char*)&optval), &optlen) == 0;
     }
+
+    void closeSocket()
+    {
+        if (_fsdHandle != INVALID_SOCKET)
+        {
+#if defined(WINDOWS)
+            closesocket(_fsdHandle);
+#elif defined(UNIX)
+            close(_fsdHandle);
+#endif
+            _fsdHandle = INVALID_SOCKET;
+        }
+    }
+    bool shutDown()
+    {
+        //then not more send data
+        return shutdown(_fsdHandle, SD_SEND) != SOCKET_ERROR;
+    }
+    static bool winsockStructInit()
+    {
+        int result = 0;
+#if defined(WINDOWS)
+        //The WSADATA structure contains information
+        //about the Windows Sockets implementation.
+        WSADATA wsaData;
+        // initialize winsock library process wsock32.dll
+        //If successful, the WSAStartup function returns zero. Otherwise,
+        //it returns one of the error codes
+        result = WSAStartup(SOCKET_V2, //The highest version of Windows Sockets specification that the caller can use
+            &wsaData  //data structure that is to receive details of the Windows Sockets implementation.
+            );
+        if (result != 0)
+            throw new runtime_error("WSAStartup failed");
+#endif
+        return result;
+    }
+
+    bool isValid()
+    {//socket check
+        return _handle != INVALID_SOCKET;
+    }
+
+    bool setBlocking(unsigned int blockMode)
+    {//set/reset blocking mode of socket
+     //(nonblockingIO) a nonzero value if the nonblocking mode should be enabled
+     //or zero if the nonblocking mode should be disabled.
+        unsigned long  arg = blockMode;
+        int retVal = ioctlSocket(_handle,
+            FIONBIO,	//set/clear nonblocking i/o
+            &arg);
+        return retVal != SOCKET_ERROR;
+    }
+
+    bool makeUnblocked()
+    {//make socket unblocked
+        return setBlocking(1);
+    }
+
+    bool makeBlocked()
+    {//make socket blocked
+        return setBlocking(0);
+    }
+
+    bool reuseAddr()
+    {
+        /*
+        !!!!!!!!!!!!!!
+        When using bind with the SO_REUSEADDR socket option,
+        the socket option must be set prior to executing bind to have any affect.
+        */
+        //Allows the socket to be bound to an address that is already in use.
+        //For more information, see bind. Not applicable on ATM sockets.
+        return setSockOpt(SOL_SOCKET, SO_REUSEADDR, true);
+    }
+
+    static void closeWinsock()
+    {
+#if defined(WINDOWS)
+        WSACleanup();
+#endif
+    }
+
+    template<typename T>
+    int receiveData(T* buffer, size_t bufLength, int flags, sockaddr_storage& fromPeerAddr, int peerAddrStructSize)
+    {
+        return ::recvfrom(_fsdHandle, dynamic_cast<char*>(buffer), bufLength, flags, (sockaddr*)&fromPeerAddr, (socklen_t*)&peerAddrStructSize);
+    }
+
+    template<typename T>
+    int sendData(T* buffer, size_t bufLength, int flags, sockaddr_storage& toPeerAddr, int peerAddrStructSize)
+    {
+        return ::sendto(_fsdHandle, dynamic_cast<char*>(buffer), bufLength, flags, (sockaddr*)&toPeerAddr, (socklen_t)&peerAddrStructSize);
+    }
+
+    template<typename T>
+    bool Send(T& obj)
+    {
+        int length = sizeof(obj);
+        return send((char *)&obj, length) == length;
+    }
+
+    template<typename T>
+    bool sendArray(T* arr,int size)
+    {
+        int length = size * sizeof(T);
+        return send((char*)arr, length);
+    }
+
+    template <typename T>
+    bool Receive(T& obj)
+    {
+        int length = sizeof(obj);
+        return receive((char*)&obj, length) == length;
+    }
+
+    template<typename T>
+    bool receiveArray(T* arr, int size)
+    {
+        int length = size * sizeof(T);
+        return receive((char*)arr, length);
+    }
+
+
 };
 
 #endif // __UDPSOCKET_HPP__
