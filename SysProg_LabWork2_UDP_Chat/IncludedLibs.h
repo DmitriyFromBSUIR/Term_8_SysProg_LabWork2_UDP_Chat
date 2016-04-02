@@ -27,6 +27,8 @@
 #include <tchar.h>
 #include <wchar.h>
 
+#include <cstdlib>
+
 #undef UNICODE
 
 #define WIN32_LEAN_AND_MEAN
@@ -81,6 +83,8 @@
 #include <limits>
 #include <math.h>
 #include <cmath>
+
+
 
 //boost libs
 
