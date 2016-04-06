@@ -218,7 +218,6 @@ private:
     int _protocolFamily;
     int _addressFamily;
     unsigned int _messageMaxSize;
-    SOCKET _fsdConnectedHandle;
 
 public:
     enum class Selection { ReadCheck, WriteCheck, ExceptCheck };
@@ -231,7 +230,7 @@ public:
         socketSettings(IP, toString(port), domain, socktype, protocol, handle, messageMaxSize);
         Socket(this->_nodeInetAddr->getAddrInfoResultList());
         Bind(this->_nodeInetAddr->getAddrInfoResultList());
-        Connect()
+        //Connect()
         //start to fill up the peeer addr that will be get packets
         /*
         _toPeerAddr = new sockaddr_in();
@@ -469,21 +468,36 @@ public:
         }
     }
 
+    static bool getNameInfo(sockaddr* pSockAddr, string& hostName, string& port)
+    {
+        //protocol - independent name resolution from an address to an ANSI host name and from a port number to the ANSI service name.
+        //NI_MAXHOST - 1025
+        char nodeBuffer[NI_MAXHOST] = "";
+        //NI_MAXSERV - 32
+        char serviceBuffer[NI_MAXSERV] = "";
+        //NI_NUMERICHOST flag returns the numeric form of the host name instead of its name.
+        //NI_NUMERICSERV flag returns the port number of the service instead of its name.
+        int retVal = getnameinfo(pSockAddr, sizeof(sockaddr), nodeBuffer, NI_MAXHOST, serviceBuffer, NI_MAXSERV, NI_NUMERICHOST | NI_NUMERICSERV);
+
+        hostName = nodeBuffer;
+        port = serviceBuffer;
+
+        //On success, getnameinfo returns zero
+        return (retVal == 0) ? true : false;
+    }
+
     template<typename T>
     //int receiveData(T* buffer, size_t bufLength, int flags, sockaddr_storage& fromPeerAddr, int peerAddrStructSize)
     //int receiveData(T* buffer, size_t bufLength, int flags, sockaddr_in* fromPeerAddr, unsigned int peerAddrStructSize)
     int receiveData(T* buffer, size_t bufLength, int flags, sockaddr* fromPeerAddr, unsigned int peerAddrStructSize)
     {
         //return ::recvfrom(_fsdHandle, reinterpret_cast<char*>(buffer), bufLength, flags, (sockaddr*)&fromPeerAddr, (socklen_t*)&peerAddrStructSize) == bufLength;
-        //return ::recvfrom(_fsdHandle, reinterpret_cast<char*>(buffer), bufLength, flags, fromPeerAddr, (socklen_t*)&peerAddrStructSize);
-        //char* buf = new char [bufLength];
+
         ssize_t recvBytes = ::recvfrom(_fsdHandle, (char*)buffer, bufLength, flags, fromPeerAddr, (socklen_t*)&peerAddrStructSize);
-        bool funcResult = getRemotePeerAddr(_fsdHandle);
-        char* peerIP = new char [16];
-        //char* peerIP = (char*)calloc(16, sizeof(char));
-        char* fromPeerAddress = NULL;
-        fromPeerAddress = const_cast<char*>(inet_ntop(AF_INET, fromPeerAddr->sa_data, peerIP, sizeof(peerIP)));
-        cout << endl << "Massege: " << buffer->getMessage() << "from peer with IP: " << fromPeerAddress << " and Port: " << "unknown" << endl;
+
+        string hostAddr, port;
+        bool funcResult = getNameInfo(fromPeerAddr, hostAddr, port);
+        cout << endl << "Massege: " << buffer->getMessage() << " from peer with IP: " << hostAddr << " and Port: " << port << endl;
         return recvBytes;
     }
 /*
@@ -503,7 +517,7 @@ public:
     int sendData(T* buffer, size_t bufLength, int flags, sockaddr* toPeerAddr, unsigned int peerAddrStructSize)
     {
         //return ::sendto(_fsdHandle, reinterpret_cast<char*>(buffer), bufLength, flags, (sockaddr*)&toPeerAddr, (socklen_t)&peerAddrStructSize) == bufLength;
-        //return ::sendto(_fsdHandle, reinterpret_cast<char*>(buffer), bufLength, flags, toPeerAddr, (socklen_t)&peerAddrStructSize);
+
         cout << endl << "Message for sending: " << (*buffer).getMessage() << endl;
         //serialization
         //char* buf = serialize(buffer);
@@ -515,19 +529,7 @@ public:
     bool Send(string IP, unsigned short int port, T& obj)
     {
         int objectLength = sizeof(obj);
-        //return sendData((char *)&obj, length) == objectLength;
-        /*
-        // continue to fill up the struct
-        _toPeerAddr->sin_port = htons(port);
-        //int errorCode = inet_aton(IP.c_str(), (struct in_addr *)_toPeerAddr->sin_addr);
-        //struct in_addr ptr = _toPeerAddr->sin_addr;
-        //int errorCode = inet_pton(_addressFamily, IP.c_str(), &ptr);
-        //return sendData(&obj, objectLength, 0, &_toPeerAddr, sizeof(_toPeerAddr));
 
-        int errorCode = inet_pton(AF_INET, IP.c_str(), &_toPeerAddr->sin_addr);
-        if(errorCode < 0) cout << endl << "error in function 'send(...)'" << endl;
-        return sendData<T>(&obj, objectLength, 0, _toPeerAddr, sizeof(_toPeerAddr)) == objectLength;
-        */
         string Port = toString(port);
         //_toPeerAddr = new NodeInetAddress(IP, Port, AF_UNSPEC, SOCK_DGRAM, IPPROTO_UDP);
         _toPeerAddr = new NodeInetAddress(IP, Port, AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -547,17 +549,7 @@ public:
     bool Receive(string IP, unsigned short int port, T& obj)
     {
         int objectLength = sizeof(obj);
-        /*
-        //return receive((char*)&obj, length) == length;
 
-        // continue to fill up the struct
-        _toPeerAddr->sin_port = htons(port);
-        _toPeerAddr->sin_addr.s_addr = htonl(INADDR_ANY);
-        //return receiveData<T>(&obj, objectLength, 0, _toPeerAddr, sizeof(_toPeerAddr)) == objectLength;
-         //return receiveData(&obj, objectLength, 0, &_toPeerAddr, sizeof(_toPeerAddr));
-        sockaddr_in *peer;
-        return receiveData<T>(&obj, objectLength, 0, peer, sizeof(peer)) == objectLength;
-        */
         string Port = toString(port);
         //_toPeerAddr = new NodeInetAddress(IP, Port, AF_UNSPEC, SOCK_DGRAM, IPPROTO_UDP);
         _toPeerAddr = new NodeInetAddress(IP, Port, AF_INET, SOCK_DGRAM, IPPROTO_UDP);

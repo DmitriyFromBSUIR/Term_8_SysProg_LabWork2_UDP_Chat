@@ -54,6 +54,10 @@
 #include <fcntl.h>
 #include <cstdlib>          // For atoi()
 #include <errno.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <sys/select.h>
+#include <poll.h>
 
 #endif
 

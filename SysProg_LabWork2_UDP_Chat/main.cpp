@@ -9,6 +9,8 @@
 //#include "BoostReceiver.hpp"
 
 #include "udpSocket.hpp"
+
+#include "multicastUDPsocket.hpp"
 /*
 class usefulDataPacket
 {
@@ -130,15 +132,23 @@ int main(int argc, char *argv[])
         cout << endl << "Receiver" << endl;
         //receiver::receiver_test(argv[1], argv[2]);
 
-        UDP_Socket udpSock("192.168.0.12", PORT);
         //string msg = "Hello, Sender";
         string msg;
         msg.reserve(256);
 
         usefulDataPacket buffer(msg);
+
+        MulticastUDPsocket mUdpSock(MulticastAddress, "28000");
+        mUdpSock.Receive<usefulDataPacket>(MulticastAddress, 28000, buffer);
+
+        //UDP_Socket udpSock("192.168.0.12", PORT);
+        UDP_Socket udpSock("127.0.0.1", PORT);
+
         //buffer.reserve(256);
         //buffer.resize(256);
-        bool funcResult = udpSock.Receive<usefulDataPacket>("192.168.0.12", 37000, buffer);
+
+        //bool funcResult = udpSock.Receive<usefulDataPacket>("192.168.0.12", 37000, buffer);
+        bool funcResult = udpSock.Receive<usefulDataPacket>("127.0.0.1", 37000, buffer);
 /*
         bool funcResult_ = udpSock.Receive<string>("192.168.0.12", 37000, buffer);
         bool func_Result = udpSock.Send<string>("192.168.0.12", 37000, buffer);
@@ -151,13 +161,19 @@ int main(int argc, char *argv[])
         //sender::transmitter_test(argv[1]);
 
         string msg = "Hello, Receiver";
-        UDP_Socket udpSock("192.168.0.12", "37000");
+        //UDP_Socket udpSock("192.168.0.12", "37000");
+        UDP_Socket udpSock("127.0.0.1", "37000");
         //string buffer;
         //buffer.reserve(256);
 
         string message = inputMessage();
         usefulDataPacket buffer(message);
-        bool funcResult = udpSock.Send<usefulDataPacket>("192.168.0.12", 38000, buffer);
+
+        MulticastUDPsocket mUdpSock(MulticastAddress, "28000");
+        mUdpSock.Send<usefulDataPacket>(MulticastAddress, 28000, buffer);
+
+        //bool funcResult = udpSock.Send<usefulDataPacket>("192.168.0.12", 38000, buffer);
+        bool funcResult = udpSock.Send<usefulDataPacket>("127.0.0.1", 38000, buffer);
 /*
         bool func_Result = udpSock.Send<string>("192.168.0.12", 38000, msg);
         bool funcResult_ = udpSock.Receive<string>("192.168.0.12", 38000, buffer);
