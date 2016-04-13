@@ -17,7 +17,7 @@ a group address within the following ranges:
        224.59.10.0 - 224.59.10.255
        224.59.11.0 - 224.59.11.255
 
-For any other multicast address, you'll find that nee can receive
+For any other multicast address, you'll find that you can receive
 multicast packets from that group address okay, but is unable to send to
 that mulitcast group address.
 */

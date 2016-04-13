@@ -397,6 +397,40 @@ public:
         return _fsdHandle != INVALID_SOCKET;
     }
 
+    bool select(Selection selection = Selection::ReadCheck, int connectionTimeOut = 30)
+    {
+        /*
+        The select function returns the total number of socket handles
+        that are ready and contained in the fd_set structures,
+        zero if the time limit expired, or SOCKET_ERROR if an error occurred.
+        */
+
+        timeval timeOut;
+        timeOut.tv_usec = 0;
+        timeOut.tv_sec = connectionTimeOut;
+
+        fd_set set;
+
+        FD_ZERO(&set);
+        FD_SET(_fsdHandle, &set);
+        int retVal = 0;
+
+        if (selection == Selection::ReadCheck)
+            retVal = ::select(_fsdHandle + 1,	//Ignored. The nfds parameter is included only for compatibility with Berkeley sockets.
+                &set,//An optional pointer to a set of sockets to be checked for readability.
+                NULL,//An optional pointer to a set of sockets to be checked for writability.
+                NULL,//An optional pointer to a set of sockets to be checked for errors.
+                &timeOut	//The maximum time for select to wait (TIMEVAL structure)
+                );
+        else if (selection == Selection::WriteCheck)
+            retVal = ::select(_fsdHandle + 1, NULL, &set, NULL, &timeOut);
+
+        else if (selection == Selection::ExceptCheck)
+            retVal = ::select(_fsdHandle + 1, NULL, NULL, &set, &timeOut);
+
+        return ((retVal != 0) && FD_ISSET(_fsdHandle, &set));
+    }
+
     bool setBlocking(unsigned int blockMode)
     {//set/reset blocking mode of socket
      //(nonblockingIO) a nonzero value if the nonblocking mode should be enabled

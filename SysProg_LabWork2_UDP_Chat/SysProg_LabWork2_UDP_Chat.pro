@@ -28,7 +28,9 @@ HEADERS += \
     BoostReceiver.hpp \
     BoostSender.hpp \
     udpSocket.hpp \
-    multicastUDPsocket.hpp
+    multicastUDPsocket.hpp \
+    Peers.hpp \
+    UsefulDataPacket.hpp
 
 LIBS += -L"/usr/local/lib/" -lboost_system -lpthread -lboost_regex -lboost_thread -lboost_exception -lboost_log
 
