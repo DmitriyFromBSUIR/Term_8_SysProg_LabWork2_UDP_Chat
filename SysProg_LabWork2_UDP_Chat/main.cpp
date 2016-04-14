@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
         cout << endl << "Receiver" << endl;
         //receiver::receiver_test(argv[1], argv[2]);
 
-        Peer peer("192.168.0.12", 37000);
+        Peer peer("192.168.0.12", "37000");
         peer.run();
 
     }
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     {
         cout << endl << "Sender" << endl;
 
-        Peer peer("192.168.0.12", 38000);
+        Peer peer("192.168.0.12", "38000");
         peer.run();
     }
     else

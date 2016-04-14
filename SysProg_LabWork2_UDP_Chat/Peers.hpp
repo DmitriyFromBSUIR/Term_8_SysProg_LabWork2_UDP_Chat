@@ -3,19 +3,20 @@
 
 #include <udpSocket.hpp>
 #include <multicastUDPsocket.hpp>
+#include <UsefulDataPacket.hpp>
 
 class Peer
 {
 private:
-    UDP_Socket _privateComUdpSock;
-    MulticastUDPsocket _mcUdpSock;
+    UDP_Socket* _privateComUdpSock;
+    MulticastUDPsocket* _mcUdpSock;
     string _currentMessage;
     string _buffer;
-    usefulDataPacket _packet;
+    usefulDataPacket* _packet;
 
 public:
     //Peer(string IP, unsigned int port, string multicastAddress = MulticastAddress, unsigned int multicastPort = multicastPORT) {
-    Peer(string IP, string port, string multicastAddress = MulticastAddress, string multicastPort = multicastPORT) {
+    Peer(string IP, string port, string multicastAddress = "224.0.0.1", string multicastPort = "28000") {
         _privateComUdpSock = new UDP_Socket(IP, port);
         //_mcUdpSock = new MulticastUDPsocket(MulticastAddress, "28000");
         //_mcUdpSock = new MulticastUDPsocket(multicastAddress, multicastPort);
@@ -79,8 +80,8 @@ public:
         fd_set readset;
 
         FD_ZERO(&readset);
-        FD_SET(_privateComUdpSock.getSocket(), &readset);
-        FD_SET(_mcUdpSock.getSocket(), &readset);
+        FD_SET(_privateComUdpSock->getSocket(), &readset);
+        FD_SET(_mcUdpSock->getSocket(), &readset);
         int retVal = 0;
 
         retVal = ::select(2 + 1,	//Ignored. The nfds parameter is included only for compatibility with Berkeley sockets.
@@ -94,17 +95,17 @@ public:
             string message = userInputMessage();
             usefulDataPacket buffer(message);
 
-            MulticastUDPsocket mUdpSock(MulticastAddress, "28000");
-            mUdpSock.Send<usefulDataPacket>(MulticastAddress, 28000, buffer);
+            //MulticastUDPsocket mUdpSock(MulticastAddress, "28000");
+            _mcUdpSock->Send<usefulDataPacket>(MulticastAddress, 28000, buffer);
 
             //UDP_Socket udpSock("192.168.0.12", "37000");
-            UDP_Socket udpSock("127.0.0.1", "37000");
+            //UDP_Socket udpSock("127.0.0.1", "37000");
 
             //bool funcResult = udpSock.Send<usefulDataPacket>("192.168.0.12", 38000, buffer);
-            bool funcResult = udpSock.Send<usefulDataPacket>("127.0.0.1", 38000, buffer);
+            bool funcResult = _privateComUdpSock->Send<usefulDataPacket>("127.0.0.1", 38000, buffer);
         }
         else if(retVal > 0){
-            if(FD_ISSET(_privateComUdpSock.getSocket(), &readset)) // if private socket
+            if(FD_ISSET(_privateComUdpSock->getSocket(), &readset)) // if private socket
             {
                 cout << endl << "[DEBUG]: Private Socket is ready" << endl;
 
@@ -114,11 +115,11 @@ public:
                 usefulDataPacket buffer(msg);
 
                 //UDP_Socket udpSock("192.168.0.12", PORT);
-                UDP_Socket udpSock("127.0.0.1", PORT);
+                //UDP_Socket udpSock("127.0.0.1", PORT);
                 //bool funcResult = udpSock.Receive<usefulDataPacket>("192.168.0.12", 37000, buffer);
-                bool funcResult = udpSock.Receive<usefulDataPacket>("127.0.0.1", 37000, buffer);
+                bool funcResult = _privateComUdpSock->Receive<usefulDataPacket>("127.0.0.1", 37000, buffer);
             }
-            if(FD_ISSET(_mcUdpSock.getSocket(), &readset)) // if multicast socket
+            if(FD_ISSET(_mcUdpSock->getSocket(), &readset)) // if multicast socket
             {
                 cout << endl << "[DEBUG]: Multicast Socket is ready" << endl;
 
@@ -127,8 +128,8 @@ public:
 
                 usefulDataPacket buffer(msg);
 
-                MulticastUDPsocket mUdpSock(MulticastAddress, "28000");
-                mUdpSock.Receive<usefulDataPacket>(MulticastAddress, 28000, buffer);
+                //MulticastUDPsocket mUdpSock(MulticastAddress, "28000");
+                _mcUdpSock->Receive<usefulDataPacket>(MulticastAddress, 28000, buffer);
             }
         }
     }
@@ -136,7 +137,9 @@ public:
     void run()
     {
         cout << "Peer is running" << endl;
-        Select();
+        while(true) {
+            Select();
+        }
     }
 };
 
